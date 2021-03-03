@@ -9,6 +9,8 @@ import reducers from "./reducers";
 
 import App from "./App.js";
 
+import "./index.css";
+
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(

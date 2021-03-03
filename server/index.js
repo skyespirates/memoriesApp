@@ -1,20 +1,27 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 import postRoutes from "./routes/posts.js";
 
 const app = express();
+dotenv.config();
 
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
+const CONNECTION_URL =
+  process.env.CONNECTION_URL || "mongodb://localhost:27017/memoriesApp";
 const PORT = process.env.PORT || 5000;
 
 app.use("/posts", postRoutes);
+app.get("/", (req, res) => {
+  res.send("Welcome to Memories API");
+});
 
-mongoose.connect("mongodb://localhost:27017/memoriesApp", {
+mongoose.connect(CONNECTION_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
